@@ -1,0 +1,16 @@
+hidden_size: 256
+num_layers: 2
+hidden_layer_recurrent: true
+hidden_layer_cell_class: LSTM
+hidden_layer_hyperparams:
+  recurrent_kernel_initializer: orthogonal
+
+output_layer_cell_class: LI
+output_layer_params:
+  tau_u_range: [1500, 3000]
+  interpolation_tau: false
+
+hidden_layer_kernel_initializer: xavier_uniform
+hidden_layer_rec_initializer: orthogonal
+output_layer_initializer: xavier_uniform
+hidden_layer_bias: true

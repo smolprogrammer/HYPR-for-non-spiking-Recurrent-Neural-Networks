@@ -1,0 +1,69 @@
+debug: false
+search_for_nan: false
+plot_a_datasample: false
+profiling: false
+extensive_logging: false
+repo_name: aim_repo
+data_dir: ???
+result_dir: ./results
+seed: 0
+experiment_name: brf_shd_hypr
+training:
+  learning_rate: 0.003
+  hypr: true
+  actual_hypr: false
+  epochs: 300
+  patience: 200000
+  grad_clip_val: 1.0
+  loss_aggregation: per_timestep_cross_entropy
+  prediction_mode: mean_over_sequence
+  eval_model_online: false
+  online_eval_subseq_len: 1024
+hypr_args:
+  num_chunks: 1
+dataset:
+  dataset_name: shd
+  subdirectory: SHD
+  bin_size_ms: 4.0
+  num_channels: 140
+  max_time_ms: 1000.0
+  train_file_name: shd_train.h5
+  test_file_name: shd_test.h5
+  batch_size: 256
+  input_dim: ${dataset.num_channels}
+  num_classes: 20
+  ignore_first_n_timesteps: 200
+  clip_to_1: false
+  seed: ${seed}
+model:
+  hidden_size: 256
+  num_layers: 1
+  hidden_layer_recurrent: true
+  hidden_layer_cell_class: BRF
+  hidden_layer_hyperparams:
+    thr: 1.0
+    dt: 0.01
+    exponential_b: false
+    exponential_omega: false
+    surrogate_gradient: double_gaussian
+    use_exponential: false
+    omega_range:
+    - 5.0
+    - 10.0
+    b_range:
+    - 2.0
+    - 3.0
+  output_layer_cell_class: LI
+  output_layer_params:
+    tau_u_range:
+    - 15
+    - 25
+    interpolation_tau: false
+  hidden_layer_kernel_initializer: xavier_uniform_custom
+  hidden_layer_rec_initializer: xavier_uniform_custom
+  output_layer_initializer: xavier_uniform_custom
+  hidden_layer_bias: true
+lr_scheduler:
+  name: constant
+optimizer:
+  name: Adam

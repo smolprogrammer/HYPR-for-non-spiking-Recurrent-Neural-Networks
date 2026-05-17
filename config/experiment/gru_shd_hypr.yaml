@@ -1,0 +1,29 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override /model: gru
+  - override /dataset: shd_4ms_140
+  - override /lr_scheduler: constant
+  - override /optimizer: adam
+
+experiment_name: gru_shd_hypr 
+
+model:
+  hidden_size: 256
+  num_layers: 2
+
+training:
+  hypr: true
+  learning_rate: 0.0005
+  grad_clip_val: 5.0
+  loss_aggregation: sum_of_softmax
+  prediction_mode: sum_of_softmax
+  epochs: 20
+
+hypr_args:
+  num_chunks: 1
+
+dataset:
+  batch_size: 64
+  ignore_first_n_timesteps: 0

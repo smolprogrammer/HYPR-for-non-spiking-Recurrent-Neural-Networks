@@ -1,0 +1,26 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override /model: lstm
+  - override /dataset: smnist
+  - override /lr_scheduler: constant
+  - override /optimizer: adam
+
+experiment_name: lstm_smnist_bptt
+
+model:
+  hidden_size: 256
+  num_layers: 2
+
+training:
+  hypr: false
+  learning_rate: 0.001
+  grad_clip_val: 5.0
+  loss_aggregation: sum_of_softmax
+  prediction_mode: sum_of_softmax
+  epochs: 20
+
+dataset:
+  batch_size: 128
+  ignore_first_n_timesteps: 0

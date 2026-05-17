@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - override /model: gru
+  - override /dataset: pathfinder
+  - override /lr_scheduler: cosine_300ep
+  - override /optimizer: adam
+
+experiment_name: gru_pathfinder_bptt
+
+model:
+  hidden_size: 256
+  num_layers: 2
+
+training:
+  hypr: false
+  learning_rate: 0.002
+  grad_clip_val: 1.0
+  loss_aggregation: per_timestep_cross_entropy
+  prediction_mode: mean_over_sequence
+  epochs: 30 #300
+
+dataset:
+  split: "easy"
+  batch_size: 128
+  ignore_first_n_timesteps: 1023
